@@ -18,13 +18,14 @@
   
   	Made by: 
   		Victor Silva ( viitorsant at gmail dot com )
-  		Lucas Teske ( lucas at teske dot net dot br )	
+  		Lucas Teske  ( lucas at teske dot net dot br )	
  */
 package br.energylabs.forum;
 
 import android.net.Uri;
 import android.os.*;
 import android.widget.*;
+import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.Intent;
 import android.webkit.*;
@@ -33,10 +34,11 @@ import android.view.*;
 
 public class verWeb extends Activity {
 
-	// Variaveis dos widgets.
+	// Widgets variables
 	WebView web;
 	ProgressBar loading;
 
+	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,21 +47,27 @@ public class verWeb extends Activity {
 		web = (WebView) findViewById(R.id.webview01);
 		loading = (ProgressBar) findViewById(R.id.load);
 
-		// Abrir o WebView com o link do forum.
+		// Open Webview with forum link
 		web.setWebViewClient(new w2());
 		web.getSettings().setJavaScriptEnabled(true);
 		web.getSettings().setLoadsImagesAutomatically(true);
 		web.loadUrl("http://forum.energylabs.com.br");
+		
 
 	}
 
-	// Voltar ao clicar no "Retornar".
+	// Turn back on clicking key back
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if ((keyCode == KeyEvent.KEYCODE_BACK) && web.canGoBack()) {
+		switch(keyCode)	{
+		case KeyEvent.KEYCODE_MENU:
+			web.loadUrl("javascript:document.getElementById(\"user_navigation\").style.display = (document.getElementById(\"user_navigation\").style.display==\"block\")?\"none\":\"block\";");
+			return true;
+		case KeyEvent.KEYCODE_BACK:
 			web.goBack();
 			return true;
 		}
+		
 		return super.onKeyDown(keyCode, event);
 	}
 
@@ -67,7 +75,7 @@ public class verWeb extends Activity {
 
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			
+			//	Open external browser if not on forum
 			if(!url.contains("forum.energylabs.com.br"))	{	
 				Log.v("shouldOverrideUrlLoading", "Opening Browser: "+url);
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
