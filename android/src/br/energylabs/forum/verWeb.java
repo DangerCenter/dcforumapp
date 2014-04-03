@@ -22,10 +22,13 @@
  */
 package br.energylabs.forum;
 
+import android.net.Uri;
 import android.os.*;
 import android.widget.*;
 import android.app.*;
+import android.content.Intent;
 import android.webkit.*;
+import android.util.Log;
 import android.view.*;
 
 public class verWeb extends Activity {
@@ -64,10 +67,14 @@ public class verWeb extends Activity {
 
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-			view.loadUrl(url);
-			return true;
-
+			
+			if(!url.contains("forum.energylabs.com.br"))	{	
+				Log.v("shouldOverrideUrlLoading", "Opening Browser: "+url);
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				startActivity(browserIntent);
+				return true;
+			}
+			return false;
 		}
 	}
 }
