@@ -114,6 +114,8 @@ public class verWeb extends Activity {
     		super.onPageFinished(view, url);
 			background.setVisibility(View.GONE);
 			loading.setVisibility(View.GONE);
+			// Just to remove the "Full version" button
+			web.loadUrl("javascript:document.getElementById(\"full_version\").style.display=\"none\"");
 		}
 		
 		@Override
