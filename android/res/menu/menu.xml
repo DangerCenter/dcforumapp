@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/mensageiro" android:title="Mensageiro" android:titleCondensed="Mensageiro"></item>
+    <item android:id="@+id/notificacoes" android:title="Notificações" android:titleCondensed="Notificações"></item>
+    <item android:id="@+id/pesquisar" android:title="Pesquisar" android:titleCondensed="Pesquisar"></item>
+    <item android:id="@+id/forum" android:title="Fórum" android:titleCondensed="Fórum"></item>
+    <item android:id="@+id/forummenu" android:title="Menu do Fórum" android:titleCondensed="Menu do Fórum"></item>
+    <item android:id="@+id/exit" android:title="Sair" android:titleCondensed="Sair"></item>
+</menu>

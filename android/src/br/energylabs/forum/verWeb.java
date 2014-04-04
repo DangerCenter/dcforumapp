@@ -28,6 +28,7 @@ import android.widget.*;
 import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.webkit.*;
 import android.util.Log;
 import android.view.*;
@@ -37,16 +38,17 @@ public class verWeb extends Activity {
 	// Widgets variables
 	WebView web;
 	ProgressBar loading;
-
+	ImageView background;
+	
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
+		
 		web = (WebView) findViewById(R.id.webview01);
-		loading = (ProgressBar) findViewById(R.id.load);
-
+		loading = (ProgressBar) findViewById(R.id.loadingbar);
+		background = (ImageView) findViewById(R.id.fadebg);
 		// Open Webview with forum link
 		web.setWebViewClient(new w2());
 		web.getSettings().setJavaScriptEnabled(true);
@@ -55,14 +57,43 @@ public class verWeb extends Activity {
 		
 
 	}
-
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.menu, menu);
+	    return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.mensageiro:
+	        	web.loadUrl("http://forum.energylabs.com.br/index.php?app=members&module=messaging");
+	            return true;
+	        case R.id.forum:
+	    		web.loadUrl("http://forum.energylabs.com.br");
+	            return true;
+	        case R.id.pesquisar:
+	        	web.loadUrl("http://forum.energylabs.com.br/index.php?app=core&module=search");
+	        	return true;
+	        case R.id.notificacoes:
+	        	web.loadUrl("http://forum.energylabs.com.br/index.php?app=core&module=usercp&tab=core&area=notificationlog&clear=true");
+	        	return true;
+	        case R.id.forummenu:
+	        	web.loadUrl("javascript:document.getElementById(\"user_navigation\").style.display = (document.getElementById(\"user_navigation\").style.display==\"block\")?\"none\":\"block\";");
+	        	return true;
+	        case R.id.exit:
+	        	finish();
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 	// Turn back on clicking key back
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch(keyCode)	{
-		case KeyEvent.KEYCODE_MENU:
-			web.loadUrl("javascript:document.getElementById(\"user_navigation\").style.display = (document.getElementById(\"user_navigation\").style.display==\"block\")?\"none\":\"block\";");
-			return true;
 		case KeyEvent.KEYCODE_BACK:
 			web.goBack();
 			return true;
@@ -72,7 +103,19 @@ public class verWeb extends Activity {
 	}
 
 	private class w2 extends WebViewClient {
-
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap favicon)	{
+			super.onPageStarted(view, url, favicon);
+			background.setVisibility(View.VISIBLE);		
+			loading.setVisibility(View.VISIBLE);
+		}
+		@Override
+    	public void onPageFinished(WebView view, String url) {
+    		super.onPageFinished(view, url);
+			background.setVisibility(View.GONE);
+			loading.setVisibility(View.GONE);
+		}
+		
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			//	Open external browser if not on forum

@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="match_parent"
 	android:layout_width="match_parent"
 	android:orientation="vertical">
-
-	<ProgressBar
-		android:layout_height="2dp"
-		style="?android:attr/progressBarStyleHorizontal"
-		android:layout_width="match_parent"
-		android:id="@+id/load"/>
 
 	<WebView
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"
 		android:id="@+id/webview01"/>
 
-</LinearLayout>
+	<ImageView
+	    android:id="@+id/fadebg"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignParentTop="true"
+	    android:src="@drawable/gradient_fade" />
+
+	<ProgressBar
+	    android:id="@+id/loadingbar"
+	    style="?android:attr/progressBarStyleLarge"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_centerVertical="true"
+	    android:visibility="visible" />
+
+</RelativeLayout>
 
